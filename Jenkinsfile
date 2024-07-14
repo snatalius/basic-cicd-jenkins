@@ -17,6 +17,9 @@ pipeline {
             }
         }
         stage('Deploy to Dev') {
+            when{
+                branch 'develop'
+            }
             steps {
                 script {
                     echo "Stage: Deploy to Dev"
@@ -25,6 +28,9 @@ pipeline {
             }
         }
         stage('Deploy to QA') {
+            when{
+                branch 'test'
+            }
             steps {
                 script {
                     echo "Stage: Deploy to QA"
@@ -33,6 +39,9 @@ pipeline {
             }
         }
         stage('Deploy to Prod') {
+            when{
+                branch 'main'
+            }
             steps {
                 script {
                     echo "Stage: Deploy to Prod"
