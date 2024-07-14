@@ -3,8 +3,11 @@ pipeline {
 
     environment {
         DEV_ENV = 'dev'
+        DEV_PORT = '28080'
         QA_ENV = 'qa'
+        QA_PORT = '18080'
         PROD_ENV = 'prod'
+        PROD_PORT = '80'
     }
 
     stages {
@@ -12,7 +15,7 @@ pipeline {
             steps {
                 script {
                     echo "Stage: Build"
-                    /* docker.build('hello-world-app') */
+                    docker.build('hello-world-app')
                 }
             }
         }
@@ -23,7 +26,7 @@ pipeline {
             steps {
                 script {
                     echo "Stage: Deploy to Dev"
-                    /* docker.image('hello-world-app').run("-e ENV=${DEV_ENV}") */
+                    docker.image('hello-world-app').run("-e ENV=${DEV_ENV} -d -p ${DEV_PORT}:80")
                 }
             }
         }
@@ -34,7 +37,7 @@ pipeline {
             steps {
                 script {
                     echo "Stage: Deploy to QA"
-                    /* docker.image('hello-world-app').run("-e ENV=${QA_ENV}") */
+                    docker.image('hello-world-app').run("-e ENV=${QA_ENV} -d -p ${QA_PORT}:80")
                 }
             }
         }
@@ -45,7 +48,7 @@ pipeline {
             steps {
                 script {
                     echo "Stage: Deploy to Prod"
-                    /* docker.image('hello-world-app').run("-e ENV=${PROD_ENV}") */
+                    docker.image('hello-world-app').run("-e ENV=${PROD_ENV} -d -p ${PROD_PORT}:80")
                 }
             }
         }
